@@ -7,6 +7,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        new HuffmanEncoder("test.txt").compressFile();
+        new HuffmanEncoder("100MB.txt").compressFile();
     }
 }

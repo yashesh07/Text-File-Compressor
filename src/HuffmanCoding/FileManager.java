@@ -1,6 +1,7 @@
 package HuffmanCoding;
 
 import java.io.*;
+import java.util.BitSet;
 
 public class FileManager {
 
@@ -19,7 +20,7 @@ public class FileManager {
         }
     }
 
-    File createFile(String fileName){
+    void createFile(String fileName){
         File compressedFile = new File(fileName + ".dopa");
         try {
             if (compressedFile.createNewFile()) {
@@ -30,12 +31,21 @@ public class FileManager {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-        return compressedFile;
     }
 
-    void writeIntoFile(String data, String fileName) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-        writer.write(data);
-        writer.close();
+    void bitWriter(String data, String fileName) throws IOException {
+        BitSet huffmanCodeBit = new BitSet(data.length());
+
+        for (int i = 0; i < data.length(); i++) {
+            if(data.charAt(i) == '1')
+                huffmanCodeBit.set(i);
+        }
+        ObjectOutputStream outputStream = null;
+        try {
+            outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+            outputStream.writeObject(huffmanCodeBit);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

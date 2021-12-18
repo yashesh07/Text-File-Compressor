@@ -73,8 +73,8 @@ public class HuffmanEncoder {
     }
 
     void compressFile() throws IOException {
-        File compressedFile = new FileManager().createFile(fileName.split("\\.")[0]);
-        new FileManager().writeIntoFile(encodedData, fileName.split("\\.")[0] + ".dopa");
+        new FileManager().createFile(fileName.split("\\.")[0]);
+        new FileManager().bitWriter(encodedData, fileName.split("\\.")[0] + ".dopa");
     }
 
 }
