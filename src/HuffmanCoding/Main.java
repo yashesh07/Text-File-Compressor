@@ -1,10 +1,12 @@
 package HuffmanCoding;
 
 import java.io.File;
-import java.util.Arrays;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println(new HuffmanEncoder("aaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbccdddddddaaaaaaaaaaaaddddaaaaaaaabbbcaaabcd").compressFile());
+    public static void main(String[] args) throws IOException {
+        new HuffmanEncoder("test.txt").compressFile();
     }
 }
