@@ -2,6 +2,10 @@ package HuffmanCoding;
 
 import java.io.*;
 import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.stream.IntStream;
 
 public class FileManager {
 
@@ -20,8 +24,14 @@ public class FileManager {
         }
     }
 
-    void createFile(String fileName){
-        File compressedFile = new File(fileName + ".dopa");
+    void writeFile(String text, String fileName) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+        writer.write(text);
+        writer.close();
+    }
+
+    void createFile(String fileName, String extension){
+        File compressedFile = new File(fileName + "." + extension);
         try {
             if (compressedFile.createNewFile()) {
                 System.out.println("File created: " + compressedFile.getName());
@@ -40,12 +50,47 @@ public class FileManager {
             if(data.charAt(i) == '1')
                 huffmanCodeBit.set(i);
         }
-        ObjectOutputStream outputStream = null;
+        ObjectOutputStream outputStream;
         try {
             outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
             outputStream.writeObject(huffmanCodeBit);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    String bitReader(String fileName) throws IOException {
+        String encodedText = "";
+        ObjectInputStream inputStream;
+        try {
+            inputStream = new ObjectInputStream(new FileInputStream(fileName));
+            BitSet huffmanCodeBit = (BitSet) inputStream.readObject();
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int i = 0; i<huffmanCodeBit.length(); i++)
+                stringBuilder.append(huffmanCodeBit.get(i) ? "1" : "0");
+            encodedText = stringBuilder.toString();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return encodedText;
+    }
+
+    void saveCodeTable(Map<Character, String> codeTable, String fileName) throws IOException {
+        Properties properties = new Properties();
+        for (Map.Entry<Character,String> entry : codeTable.entrySet()) {
+            String key = entry.getKey().toString();
+            properties.put(key, entry.getValue());
+        }
+        properties.store(new FileOutputStream(fileName), null);
+    }
+
+    Map<String, Character> loadCodeTable(String fileName) throws IOException {
+        Map<String, Character> codeTable = new HashMap<>();
+        Properties properties = new Properties();
+        properties.load(new FileInputStream(fileName));
+        for (String key : properties.stringPropertyNames()) {
+            codeTable.put(properties.get(key).toString(), key.charAt(0));
+        }
+        return codeTable;
     }
 }

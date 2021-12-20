@@ -9,17 +9,14 @@ public class HuffmanEncoder {
 
     private static final int ALPHABET_SIZE = 256;
 
-    private final String encodedData;
-    private final String fileName;
-
     HuffmanEncoder(String file) throws IOException {
 
-        this.fileName = file;
         String fileData = new FileManager().readFile(file);
         int [] frequency = buildFrequencyDictionary(fileData);
         Node root = buildHuffmanTree(frequency);
         Map<Character, String> codeTable = getCodeTable(root);
-        encodedData = getEncodedData(fileData, codeTable);
+        String encodedData = getEncodedData(fileData, codeTable);
+        compressFile(file, codeTable, encodedData);
 
     }
 
@@ -72,8 +69,10 @@ public class HuffmanEncoder {
         return stringBuilder.toString();
     }
 
-    void compressFile() throws IOException {
-        new FileManager().createFile(fileName.split("\\.")[0]);
+    private void compressFile(String fileName, Map<Character, String> codeTable, String encodedData) throws IOException {
+        new FileManager().createFile(fileName.split("\\.")[0], "dopa");
+        new FileManager().createFile(fileName.split("\\.")[0], "map");
+        new FileManager().saveCodeTable(codeTable, fileName.split("\\.")[0] + ".map");
         new FileManager().bitWriter(encodedData, fileName.split("\\.")[0] + ".dopa");
     }
 
