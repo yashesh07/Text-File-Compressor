@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        new HuffmanEncoder("test.txt");
-        new HuffmanDecoder("test4.dopa", "test4.map");
+//        new HuffmanEncoder("test1.txt");
+        new HuffmanDecoder("test4");
     }
 }

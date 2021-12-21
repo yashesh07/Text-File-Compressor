@@ -70,10 +70,11 @@ public class HuffmanEncoder {
     }
 
     private void compressFile(String fileName, Map<Character, String> codeTable, String encodedData) throws IOException {
-        new FileManager().createFile(fileName.split("\\.")[0], "dopa");
-        new FileManager().createFile(fileName.split("\\.")[0], "map");
-        new FileManager().saveCodeTable(codeTable, fileName.split("\\.")[0] + ".map");
-        new FileManager().bitWriter(encodedData, fileName.split("\\.")[0] + ".dopa");
+        new FileManager().createDirectory(fileName.split("\\.")[0]);
+        new FileManager().createFile(fileName.split("\\.")[0] + "\\" + fileName.split("\\.")[0], "dopa");
+        new FileManager().createFile(fileName.split("\\.")[0] + "\\" + fileName.split("\\.")[0], "map");
+        new FileManager().saveCodeTable(codeTable, fileName.split("\\.")[0] + "\\" + fileName.split("\\.")[0] + ".map");
+        new FileManager().bitWriter(encodedData, fileName.split("\\.")[0] + "\\" + fileName.split("\\.")[0] + ".dopa");
     }
 
 }

@@ -9,6 +9,13 @@ import java.util.stream.IntStream;
 
 public class FileManager {
 
+    void createDirectory(String path){
+        File theDir = new File(path);
+        if (!theDir.exists()){
+            theDir.mkdirs();
+        }
+    }
+
     String readFile(String fileName) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             StringBuilder sb = new StringBuilder();
