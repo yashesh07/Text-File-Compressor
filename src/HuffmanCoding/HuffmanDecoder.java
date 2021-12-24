@@ -5,14 +5,14 @@ import java.util.Map;
 
 public class HuffmanDecoder {
 
-    HuffmanDecoder(String folder) throws IOException {
+    HuffmanDecoder(String folder, String inputFileName, String outputFile) throws IOException {
 
-        String textFile = folder + "\\" + folder + ".dopa";
-        String mapFile = folder + "\\" + folder + ".map";
+        String textFile = folder + "\\" + inputFileName + ".dopa";
+        String mapFile = folder + "\\" + inputFileName + ".map";
         Map<String, Character> codeTable = new FileManager().loadCodeTable(mapFile);
         String encodedData = new FileManager().bitReader(textFile);
         String decodedData = getDecodedData(encodedData, codeTable);
-        decompressFile(folder, decodedData);
+        decompressFile(outputFile, decodedData);
 
     }
 
@@ -29,8 +29,9 @@ public class HuffmanDecoder {
         return stringBuilder.toString();
     }
 
-    private void decompressFile(String fileName, String decodedData) throws IOException {
-        new FileManager().createFile(fileName, "txt");
-        new FileManager().writeFile(decodedData, fileName + ".txt");
+    private void decompressFile(String outputFile, String decodedData) throws IOException {
+
+        new FileManager().createFile(outputFile, "txt");
+        new FileManager().writeFile(decodedData, outputFile + ".txt");
     }
 }

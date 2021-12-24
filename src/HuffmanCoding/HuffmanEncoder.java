@@ -9,14 +9,14 @@ public class HuffmanEncoder {
 
     private static final int ALPHABET_SIZE = 256;
 
-    HuffmanEncoder(String file) throws IOException {
+    HuffmanEncoder(String file, String outputFile, String fileName) throws IOException {
 
         String fileData = new FileManager().readFile(file);
         int [] frequency = buildFrequencyDictionary(fileData);
         Node root = buildHuffmanTree(frequency);
         Map<Character, String> codeTable = getCodeTable(root);
         String encodedData = getEncodedData(fileData, codeTable);
-        compressFile(file, codeTable, encodedData);
+        compressFile(outputFile, fileName, codeTable, encodedData);
 
     }
 
@@ -69,12 +69,13 @@ public class HuffmanEncoder {
         return stringBuilder.toString();
     }
 
-    private void compressFile(String fileName, Map<Character, String> codeTable, String encodedData) throws IOException {
-        new FileManager().createDirectory(fileName.split("\\.")[0]);
-        new FileManager().createFile(fileName.split("\\.")[0] + "\\" + fileName.split("\\.")[0], "dopa");
-        new FileManager().createFile(fileName.split("\\.")[0] + "\\" + fileName.split("\\.")[0], "map");
-        new FileManager().saveCodeTable(codeTable, fileName.split("\\.")[0] + "\\" + fileName.split("\\.")[0] + ".map");
-        new FileManager().bitWriter(encodedData, fileName.split("\\.")[0] + "\\" + fileName.split("\\.")[0] + ".dopa");
+    private void compressFile(String outputFile, String fileName, Map<Character, String> codeTable, String encodedData) throws IOException {
+
+        new FileManager().createDirectory(outputFile);
+        new FileManager().createFile(outputFile + "\\" + fileName, "dopa");
+        new FileManager().createFile(outputFile + "\\" + fileName, "map");
+        new FileManager().saveCodeTable(codeTable, outputFile + "\\" + fileName + ".map");
+        new FileManager().bitWriter(encodedData, outputFile + "\\" + fileName + ".dopa");
     }
 
 }
