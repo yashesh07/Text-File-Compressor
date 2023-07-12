@@ -13,7 +13,7 @@ import javax.swing.JFileChooser;
 
 /**
  *
- * @author suraj
+ * @author yashesh
  */
 public class Main extends javax.swing.JFrame {
 
